@@ -1,19 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using HardSkillStation.Model;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Cors;
 using HardSkillStation.Logic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
+
 
 namespace HardSkillStation
 {
@@ -129,36 +117,6 @@ namespace HardSkillStation
                     return Results.BadRequest(new { ErrorMessage = "An error occurred", ExceptionMessage = ex.Message });
                 }
             });
-            //// Fetch and Return Serialized JSON
-            //app.MapGet("/getSerializedJson", async (LanguageContext dbContext) =>
-            //{
-            //    try
-            //    {
-            //        // Assume you have a LanguageJson entity with an Id
-            //        var languageJson = await dbContext.Languages.FindAsync(1);
-
-            //        if (languageJson == null)
-            //        {
-            //            return Results.NotFound("LanguageJson not found");
-            //        }
-
-            //        // Deserialize the stored JSON string
-            //        var deserializedJson = JsonSerializer.Deserialize<LanguageJson>(languageJson.JsonString);
-
-            //        // Serialize the JSON to send to the frontend
-            //        var serializedJson = JsonSerializer.Serialize(deserializedJson);
-
-            //        return Results.Ok(serializedJson);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        // Log the error
-            //        Console.WriteLine($"An error occurred: {ex.Message}");
-
-            //        // Response to client
-            //        return Results.BadRequest(new { ErrorMessage = "An error occurred", ExceptionMessage = ex.Message });
-            //    }
-            //});
             // Lav UserEvent table registrering
             app.MapPost("/registerUserForEvent", async (UserEvent userEvent, UserEventContext dbContext) =>
             {
@@ -304,32 +262,13 @@ namespace HardSkillStation
                 }
                 catch (Exception ex)
                 {
-                    // Log the error message
+                    // Log fejlbesked
                     Console.WriteLine($"An error occurred: {ex.Message}");
 
-                    // Return a bad request response
+                    // Returner en BadRequest respons
                     return Results.BadRequest(new { ErrorMessage = "An error occurred", ExceptionMessage = ex.Message });
                 }
             });
-
-            //// Create event
-            //app.MapPost("/createEvent", async (Event events, EventContext dbContext) =>
-            //{
-            //    try
-            //    {
-            //        dbContext.Events.Add(events);
-            //        await dbContext.SaveChangesAsync();
-            //        return Results.Created($"/categories/{events.Id}", events); // Returner lavet Event
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        // Log af fejlmeddelelse
-            //        Console.WriteLine($"An error occurred: {ex.Message}");
-
-            //        // Response til brugerclient
-            //        return Results.BadRequest(new { ErrorMessage = "An error occurred", ExceptionMessage = ex.Message });
-            //    }
-            //});
 
             // Create event and translation
             app.MapPost("/createEventAndTranslations", async (EventCreationModel model, EventContext eventContext, EventTranslationContext translationContext) =>
