@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  hardskillstation:
+    image: rapidfort/microsoft-sql-server-2019-ib
+    build:
+      context: .
+      dockerfile: hardskillstation/Dockerfile
+    environment:
+      SA_PASSWORD: Mango24$
+      ACCEPT_EULA: Y
+    ports:
+      - "14331:1433"
+    networks:
+      - hardskillstation_network
+
+  # sql-server:
+  #   image: rapidfort/microsoft-sql-server-2019-ib
+  #   environment:
+  #     SA_PASSWORD: Mango24$
+  #     ACCEPT_EULA: Y
+  #   ports:
+  #     - "14332:1433"
+  #   networks:
+  #     - hardskillstation_network
+
+networks:
+  hardskillstation_network:
