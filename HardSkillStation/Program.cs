@@ -10,7 +10,7 @@ namespace HardSkillStation
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); // DefaultConnection or LocalConnection
 
             // Contexts
             builder.Services.AddDbContext<EventContext>(options =>
@@ -20,8 +20,6 @@ namespace HardSkillStation
             builder.Services.AddDbContext<UserEventContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDbContext<CategoryContext>(options =>
-                options.UseSqlServer(connectionString));
-            builder.Services.AddDbContext<LanguageContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDbContext<EventTranslationContext>(options =>
                 options.UseSqlServer(connectionString));
